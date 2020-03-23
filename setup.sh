@@ -1,23 +1,34 @@
 #!/bin/bash
 sh -c '
 #On Raspbian Stretch we need to install old libssl (1.02 to be exact)
-sudo apt-get update
-sudo apt-get purge -y libssl-dev
-sudo apt-get install -y libssl1.0-dev git cmake build-essential curl libcurl4-openssl-dev uuid-dev
+# TODO on PYNQ to verify we don't need this
+# sudo apt-get update
+# sudo apt-get purge -y libssl-dev
+# sudo apt-get install -y libssl1.0-dev git cmake build-essential curl libcurl4-openssl-dev uuid-dev
 
-#On Raspbian Stretch precompiled sdk from ppa is no good. Lets compile it manually
-cd ~
-mkdir Source
-cd Source
-git clone --recursive https://github.com/azure/azure-iot-sdk-c.git
 
-cd azure-iot-sdk-c/build_all/linux
-./build.sh --no-make
+if [ -z "$HOME" ]
+then
+      export HOME=/root
+fi
 
-cd ../../cmake/iotsdk_linux
-make
+#On PYNQ, No PPA exists for this...
 
-sudo make install
+if [! -d ~/Source]
+then
+
+    cd ~
+    mkdir Source
+    cd Source
+    git clone --recursive https://github.com/azure/azure-iot-sdk-c.git
+
+    cd azure-iot-sdk-c/build_all/linux
+    ./build.sh --no-make
+
+    cd ../../cmake/iotsdk_linux
+    make
+    sudo make install
+fi
 '
 
 vercomp() {
@@ -71,10 +82,11 @@ else
     echo "cmake version check pass (current:$CMAKE_VER,require:$CMAKE_LEAST)"
 fi
 
-git clone git://git.drogon.net/wiringPi
-cd ./wiringPi
-./build
-cd ..
+# PYNQ - not on a RPi
+# git clone git://git.drogon.net/wiringPi
+# cd ./wiringPi
+# ./build
+# cd ..
 
 git clone https://github.com/kgabis/parson.git
 cd ./parson
