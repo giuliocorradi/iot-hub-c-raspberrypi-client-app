@@ -24,6 +24,9 @@ int readMessage(int messageId, char *payload)
     return (temperature > TEMPERATURE_ALERT) ? 1 : 0;
 }
 
+void blinkLED() {}
+void setupWiring(){}
+
 #else
 int mask_check(int check, int mask)
 {
@@ -80,7 +83,7 @@ int readMessage(int messageId, char *payload)
              humidity);
     return temperature > TEMPERATURE_ALERT ? 1 : 0;
 }
-#endif
+
 
 void blinkLED()
 {
@@ -97,3 +100,4 @@ void setupWiring()
     }
     pinMode(LED_PIN, OUTPUT);
 }
+#endif

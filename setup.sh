@@ -1,10 +1,9 @@
 #!/bin/bash
-sh -c '
 #On Raspbian Stretch we need to install old libssl (1.02 to be exact)
-# TODO on PYNQ to verify we don't need this
-# sudo apt-get update
-# sudo apt-get purge -y libssl-dev
-# sudo apt-get install -y libssl1.0-dev git cmake build-essential curl libcurl4-openssl-dev uuid-dev
+#TODO on PYNQ to verify we don't need this
+#sudo apt-get update
+#sudo apt-get purge -y libssl-dev
+#sudo apt-get install -y libssl1.0-dev git cmake build-essential curl libcurl4-openssl-dev uuid-dev
 
 
 if [ -z "$HOME" ]
@@ -13,8 +12,7 @@ then
 fi
 
 #On PYNQ, No PPA exists for this...
-
-if [! -d ~/Source]
+if [ ! -d ~/Source]
 then
 
     cd ~
@@ -29,7 +27,7 @@ then
     make
     sudo make install
 fi
-'
+
 
 vercomp() {
     if [[ $1 == $2 ]]
@@ -87,12 +85,14 @@ fi
 # cd ./wiringPi
 # ./build
 # cd ..
-
-git clone https://github.com/kgabis/parson.git
-cd ./parson
-mv parson.c parson.h ..
-cd ..
-rm -rf parson
+if [ ! -d ./parson.c]
+then
+    git clone https://github.com/kgabis/parson.git
+    cd ./parson
+    mv parson.c parson.h ..
+    cd ..
+    rm -rf parson
+fi
 
 if [[ $1 == "--simulated-data" ]]; then
     echo -e "Using simulated data"
