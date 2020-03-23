@@ -17,7 +17,7 @@ int readMessage(int messageId, char *payload)
     float temperature = random(20, 30);
     snprintf(payload,
              BUFFER_SIZE,
-             "{ \"deviceId\": \"Raspberry Pi - C\", \"messageId\": %d, \"temperature\": %f, \"humidity\": %f }",
+             "{ \"deviceId\": \"PYNQ Ultra96\", \"messageId\": %d, \"temperature\": %f, \"humidity\": %f }",
              messageId,
              temperature,
              random(60, 80));
